@@ -9,6 +9,7 @@ import { createConfig, WagmiConfig, createStorage, configureChains} from 'wagmi'
 import { goerli } from 'wagmi/chains'
 import './App.css';
 import Home from './Home.js'
+import Profile from './Profile.js'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -62,6 +63,7 @@ function App() {
               <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
                   <Nav.Link as={Link} style={{color: "silver"}} to="/">Home</Nav.Link>
+                  <Nav.Link as={Link} style={{color: "silver"}} to="/profile">Profile</Nav.Link>
                 </Nav>
                 <Nav>
                   {account ? (
@@ -92,6 +94,8 @@ function App() {
           ) : (
             <Routes>
                 <Route path="/" element={<Home contract={contract} account={account} />
+                } />
+                <Route path="/profile" element={<Profile contract={contract} account={account} />
                 } />
             </Routes>
           )}
