@@ -1,0 +1,23 @@
+.App {
+    text-align: center;
+  }
+  
+  .App-header {
+    background-color: #663399;
+    padding: 20px;
+    color: white;
+  }
+  
+  .post {
+    background-color: #f5f0fa;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .liked {
+    background-color: #8a2be2;
+    color: white;
+  }
+  
