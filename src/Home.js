@@ -1,24 +1,8 @@
 import React, { useState } from 'react';
 import { useEnsAvatar, useEnsName } from 'wagmi';
 import { ethers } from "ethers"
-import EtherniteAbi from './contractsData/ethernite.json'
-import EtherniteAddress from './contractsData/ethernite-address.json'
 
-const Home = ({  account }) => {
-
-  const handleDonate = async (postId) => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    
-    try {
-      const contract = new ethers.Contract(EtherniteAddress, EtherniteAbi, signer);
-      const tx = await contract.donateToPost(postId, { value: ethers.utils.parseEther('0.01') });
-      await tx.wait();
-      console.log('Donation successful');
-    } catch (error) {
-      console.error('Error donating:', error);
-    }
-  };
+const Home = ({ contract, account }) => {
 
   // Use the useEnsName hook to fetch ENS name associated with the account
   const { data: ensNameData } = useEnsName({
@@ -28,7 +12,7 @@ const Home = ({  account }) => {
   // Use the useEnsAvatar hook to fetch the avatar associated with the user's ENS name
   const { data: avatarData } = useEnsAvatar({
     name: ensNameData,
-    // chainID: 5,
+    chainID: 5,
   });
 
   // Define avatar URLs for different users (example URLs)
@@ -36,6 +20,10 @@ const Home = ({  account }) => {
     'dummy1.eth': 'https://euc.li/goerli/qtea8.eth',
     'akiva-8.eth': 'https://euc.li/goerli/akiva-8.eth',
   };
+  const addressMapping = {
+    'qtea8.eth': '0xC3974Fd0b75Cce812123ABe572fa42063561C6bf',
+    'akiva-8.eth': '0x735BdFbA03D4F88928670Eb7a336AC5cdB8d6d01',
+    }
 
   // State to manage the list of posts
   const [posts, setPosts] = useState([
@@ -43,6 +31,35 @@ const Home = ({  account }) => {
     { id: 2, username: 'akiva-8.eth', address:"0x735BdFbA03D4F88928670Eb7a336AC5cdB8d6d01", content: 'Donate ETH to enter this giveaway!' },
   ]);
 
+  const handleDonate = async (postId) => {
+    const post = posts.find((p) => p.id === postId);
+  
+    if (!post) {
+      return;
+    }
+    
+    // Determine the target address for donation
+    const targetAddress = addressMapping[post.username] || post.address;
+  
+    const donationAmount = ethers.utils.parseEther('0.00001');
+  
+    try {
+      const transaction = await contract.donateToPost(postId, {
+        value: donationAmount,
+      });
+  
+      await transaction.wait();
+  
+      // Update the list of posts to reflect the totalDonations increase
+      const updatedPosts = posts.map((p) =>
+        p.id === postId ? { ...p, totalDonations: p.totalDonations.add(donationAmount) } : p
+      );
+      setPosts(updatedPosts);
+    } catch (error) {
+      console.error('Error donating:', error);
+    }
+  };
+  
   // State to manage the content of the new post input
   const [newPostContent, setNewPostContent] = useState('');
 
@@ -93,23 +110,30 @@ const Home = ({  account }) => {
             <img
               src={
                 post.username === ensNameData // Check if it's the user who made the post
-                  ? avatarData // Use the user's avatar
-                  : avatarUrls[post.username] || 'https://publish.one37pm.net/wp-content/uploads/2021/11/Brantly.eth_.png' // Use dummy avatars
+                  ? avatarData
+                  : avatarUrls[post.username] ||
+                    'https://publish.one37pm.net/wp-content/uploads/2021/11/Brantly.eth_.png'
               }
               alt={`${post.username}'s profile`}
               style={{ width: 50, height: 50 }}
             />
             <span className="username">{post.username}</span>
+            {addressMapping[post.username] && ( // Display linked address if available
+              <span className="address">
+                Address: {addressMapping[post.username]}
+              </span>
+            )}
           </div>
           <p>{post.content}</p>
           <button
             className={post.liked ? 'liked' : ''}
-            onClick={() => handleDonate(post.id)} // Change the function to handleDonate
+            onClick={() => handleLike(post.id)}
           >
-            {post.liked ? 'Donated' : 'Donate 0.01 Eth'} {/* Change the donation amount in the button text */}
+            {post.liked ? 'Donated' : 'Donate 0.001 Eth'}
           </button>
+          <button onClick={() => handleDonate(post.id)}>Donate</button>
         </div>
-      ))}
+      ))}1
     </div>
   );
 };
