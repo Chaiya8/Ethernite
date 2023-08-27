@@ -1,7 +1,25 @@
 import React, { useState } from 'react';
 import { useEnsAvatar, useEnsName } from 'wagmi';
+import { ethers } from "ethers"
+import EtherniteAbi from './contractsData/ethernite.json'
+import EtherniteAddress from './contractsData/ethernite-address.json'
 
 const Home = ({  account }) => {
+
+  const handleDonate = async (postId) => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    
+    try {
+      const contract = new ethers.Contract(EtherniteAddress, EtherniteAbi, signer);
+      const tx = await contract.donateToPost(postId, { value: ethers.utils.parseEther('0.01') });
+      await tx.wait();
+      console.log('Donation successful');
+    } catch (error) {
+      console.error('Error donating:', error);
+    }
+  };
+
   // Use the useEnsName hook to fetch ENS name associated with the account
   const { data: ensNameData } = useEnsName({
     address: account,
@@ -15,14 +33,14 @@ const Home = ({  account }) => {
 
   // Define avatar URLs for different users (example URLs)
   const avatarUrls = {
-    'dummy1.eth': 'https://publish.one37pm.net/wp-content/uploads/2021/11/Brantly.eth_.png',
-    'dummy2.eth': 'https://www.larvalabs.com/cryptopunks/cryptopunk2147.png',
+    'dummy1.eth': 'https://euc.li/goerli/qtea8.eth',
+    'akiva-8.eth': 'https://euc.li/goerli/akiva-8.eth',
   };
 
   // State to manage the list of posts
   const [posts, setPosts] = useState([
-    { id: 1, username: 'dummy1.eth', address:"", content: 'How do I make a post?' },
-    { id: 2, username: 'dummy2.eth', address:"", content: 'Donate ETH to enter this giveaway!' },
+    { id: 1, username: 'qtea8.eth', address:"0xC3974Fd0b75Cce812123ABe572fa42063561C6bf", content: 'How do I make a post?' },
+    { id: 2, username: 'akiva-8.eth', address:"0x735BdFbA03D4F88928670Eb7a336AC5cdB8d6d01", content: 'Donate ETH to enter this giveaway!' },
   ]);
 
   // State to manage the content of the new post input
@@ -86,9 +104,9 @@ const Home = ({  account }) => {
           <p>{post.content}</p>
           <button
             className={post.liked ? 'liked' : ''}
-            onClick={() => handleLike(post.id)}
+            onClick={() => handleDonate(post.id)} // Change the function to handleDonate
           >
-            {post.liked ? 'Donated' : 'Donate 0.001 Eth'}
+            {post.liked ? 'Donated' : 'Donate 0.01 Eth'} {/* Change the donation amount in the button text */}
           </button>
         </div>
       ))}

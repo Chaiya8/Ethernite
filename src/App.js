@@ -56,7 +56,7 @@ function App() {
           <Navbar expand="lg" bg="secondary" style={{ background: 'linear-gradient(to bottom, #7E57C2, #311B92)' }} variant="dark">
             <Container>
               <Navbar.Brand href="">
-                <img src="public/logo.png" width="40" height="40" className="" alt="" />
+                <img src="https://media.discordapp.net/attachments/807743928316067862/1145136874197885068/logo.png?width=662&height=662" width="40" height="40" className="" alt="" />
                 &nbsp; Ethernite
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="responsive-navbar-nav" />
