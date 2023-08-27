@@ -17,7 +17,7 @@ const Home = ({ contract, account }) => {
 
   // Define avatar URLs for different users (example URLs)
   const avatarUrls = {
-    'dummy1.eth': 'https://euc.li/goerli/qtea8.eth',
+    'qtea8.eth': 'https://euc.li/goerli/qtea8.eth',
     'akiva-8.eth': 'https://euc.li/goerli/akiva-8.eth',
   };
   const addressMapping = {
