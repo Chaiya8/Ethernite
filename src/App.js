@@ -87,10 +87,21 @@ function App() {
         </>
         <div>
           {loading ? (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
-              <Spinner animation="border" style={{ display: 'flex', color: "white" }} />
-              <p className='mx-3 my-0' style={{color: "white"}}>Waiting on Metamask to Connect</p>
-            </div>
+            <div>
+            <section className="home">
+              <div className="content">
+                <h1 className="title">
+                  Ethernite: <span> Igniting </span> Decentralised <span> Innovation</span>
+                </h1>
+                <a href="" className="btn">
+                  get started
+                </a>
+              </div>
+              <div className="image">
+                <img src="./logo.png" alt="" data-speed="-3" className="move" />
+              </div>
+            </section>
+          </div>
           ) : (
             <Routes>
                 <Route path="/" element={<Home contract={contract} account={account} />

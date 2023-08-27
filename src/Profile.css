@@ -1,103 +1,178 @@
+/* Reset and common styles */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700&display=swap');
+
+* {
+  font-family: 'Nunito', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  text-transform: capitalize;
+  transition: 0.2s linear;
+}
+/* Header styles */
 .header {
-  color: #fff;
-  padding: 20px;
-  font-size:large;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-
-.header h1 {
-  margin: 10px 0;
-  font-size: 36px;
-  text-align: center;
-}
-
-.header img {
-  max-width: 200px;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
-
-.nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.nav a {
-  color: #fff;
-  text-decoration: none;
-  padding: 8px;
-}
-
-.product {
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 20px;
-  margin: 20px;
-  display: inline-block;
-  width: 200px;
-  text-align: center;
-  background-color: #fff;         
-}
-
-.container {
-  padding: 0 2rem;
-}
-
-.main {
-  min-height: 90vh;
-  padding:0%;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   background-color: #311A6A;
-  color:#fff;
-  
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+}
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+.ens-name {
+  font-size: 24px;
+  margin: 0;
 }
 
-.footer {
+
+/* Profile card styles */
+.profile-section {
   display: flex;
-  flex: 1;
-  padding: 2rem 0;
-  border-top: 1px solid #eaeaea;
   justify-content: center;
+  align-items: center;
+  background-color: #f2f2f2;
+  padding: 40px;
+}
+
+.profile-card {
+  display: flex;
   align-items: center;
 }
 
-.title {
-  margin: 3rem 0;
-  line-height: 1;
-  font-size: 2.5rem;
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-right: 20px;
 }
 
-.description {
-  margin: 0 0 2rem;
-  line-height: 1.5;
-  font-size: 1.5rem;
+.profile-info {
+  color: #333;
 }
 
-.grid {
+.ens-name {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.button-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 16px;
+  color: #fff;
+}
+
+.button {
+  padding: 5px 10px;
+  background-color: #3498db;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+/* Analytics card styles */
+.analytics-section {
+  background-color: #fff;
+  margin-top: 40px;
+  padding: 20px;
+}
+
+.analytics-card {
+  text-align: center;
+}
+
+.analytics-graph {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Tutorial section styles */
+.tutorial-section {
+  background-color: #f2f2f2;
+  padding: 40px;
+  margin-top: 40px;
+}
+
+.video-container {
+  display: flex;
   flex-wrap: wrap;
-  max-width: 800px;
+  justify-content: space-between;
+}
+body {
+  background-image: url('background6.png'); /* Replace with your image URL */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* Add other background-related styles as needed */
 }
 
-.card {
-  margin: 1rem;
-  padding: 1.5rem;
-  text-align: left;
-  color: inherit;
-  text-decoration: none;
-  border: 1px solid #eaeaea;
-  border-radius: 10px;
-  transition: color 0.15s ease, border-color 0.15s ease;
-  max-width: 1200px;
+h3{
+  font-size: 30%;
+    color: #640c67;
+    text-align: center;
+    margin-top: 5px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.tutorial-section h3 {
+  font-size: 30px; /* Adjust the font size as needed */
+}
+
+.video {
+  flex: 0 0 calc(33.33% - 20px);
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  padding: 0 10px;
+}
+
+.video iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Footer styles */
+.footer {
+  border-top: 1px solid #eaeaea;
+  padding: 20px;
+  text-align: center;
+  background-color: #311A6A;
+  color: #fff;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .video {
+    flex: 0 0 calc(50% - 20px);
+  }
+}
+/* Your CSS styles remain unchanged up to this point */
+
+/* Embedded graph styles */
+.embedded-graph {
+  width: 100%;
+  aspect-ratio: 1200 / 630;
+  border: none;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .video {
+    flex: 0 0 calc(50% - 20px);
+  }
+}
+.ethereum {
+  background-color: #f2f2f2;
+  padding: 40px;
+  margin-top: 40px;
+  text-align: center;
+}
+
+.ethereum .embedded-graph {
+  width: 100%;
+  height: 500px; /* Adjust the height to match the desired size */
+  border: none;
 }

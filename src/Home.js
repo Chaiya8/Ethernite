@@ -55,8 +55,7 @@ const Home = ({ contract, account }) => {
       console.error('Error donating:', error);
     }
 };
-
-  
+ 
   // State to manage the content of the new post input
   const [newPostContent, setNewPostContent] = useState('');
 
@@ -115,11 +114,6 @@ const Home = ({ contract, account }) => {
               style={{ width: 50, height: 50 }}
             />
             <span className="username">{post.username}</span>
-            {addressMapping[post.username] && ( // Display linked address if available
-              <span className="address">
-                Address: {addressMapping[post.username]}
-              </span>
-            )}
           </div>
           <p>{post.content}</p>
           <button
@@ -130,7 +124,7 @@ const Home = ({ contract, account }) => {
           </button>
           <button onClick={() => handleDonate(post.id)}>Donate</button>
         </div>
-      ))}1
+      ))}
     </div>
   );
 };
